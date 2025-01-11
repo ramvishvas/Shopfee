@@ -1,3 +1,6 @@
+import { SplashDarkImg, SplashLightImg } from "@/assets/images";
+import { ThemedView } from "@/components/themes/ThemedView";
+import { useColorScheme } from "@/hooks/useColorScheme";
 import React, { useRef, useEffect } from "react";
 import {
   Animated,
@@ -18,8 +21,6 @@ const SplashAnimation: React.FC<SplashAnimationProps> = ({
   // const threshold = new Animated.Value(500);
   const translateY = useRef(new Animated.Value(-height)).current;
 
-  console.log("SplashAnimation", translateY);
-
   useEffect(() => {
     // Start the animation
     Animated.timing(translateY, {
@@ -34,19 +35,23 @@ const SplashAnimation: React.FC<SplashAnimationProps> = ({
     });
   }, [translateY, onAnimationEnd]);
 
+  const colorScheme = useColorScheme();
+
   return (
-    <Animated.View
-      style={[
-        styles.animatedView,
-        { transform: [{ translateY }] }, // Bind the animated value
-      ]}
-    >
-      <ImageBackground
-        source={require("@/assets/images/splash.png")} // Replace with the path to your image
-        resizeMode='cover' // Adjust the image scaling
-        style={styles.imageBackground}
-      />
-    </Animated.View>
+    <ThemedView className='flex-1'>
+      <Animated.View
+        style={[
+          styles.animatedView,
+          { transform: [{ translateY }] }, // Bind the animated value
+        ]}
+      >
+        <ImageBackground
+          source={colorScheme === "dark" ? SplashDarkImg : SplashLightImg} // Replace with the path to your image
+          resizeMode='cover' // Adjust the image scaling
+          style={styles.imageBackground}
+        />
+      </Animated.View>
+    </ThemedView>
   );
 };
 

@@ -1,15 +1,13 @@
 import { CAROUSEL_DATA } from "@/assets/data/onboarding";
 import Card from "@/components/onboarding/Card";
 import Pagination from "@/components/onboarding/Pagination";
+import { ThemedButton } from "@/components/themes/ThemedButton";
+import { ThemedText } from "@/components/themes/ThemedText";
+import { ThemedView } from "@/components/themes/ThemedView";
+import AsyncStorageUtils, { StorageKeys } from "@/utils/AsyncStorageUtils";
 import { Link, router } from "expo-router";
 import React, { useRef, useState } from "react";
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  ViewToken,
-  FlatList,
-} from "react-native";
+import { View, ViewToken, FlatList } from "react-native";
 import Animated, {
   useSharedValue,
   useAnimatedScrollHandler,
@@ -36,8 +34,9 @@ const OnboardingScreen = () => {
       }: {
         viewableItems: ViewToken[];
       }) => {
-        if (viewableItems && viewableItems[0]?.index !== null) {
-          setCurrentIndex(viewableItems[0].index);
+        const index = viewableItems?.[0]?.index;
+        if (index != null) {
+          setCurrentIndex(index);
         }
       },
     },
@@ -45,24 +44,24 @@ const OnboardingScreen = () => {
 
   const flatListRef = useRef<FlatList>(null);
 
-  const handleNext = () => {
+  const handleNext = async () => {
     if (currentIndex < CAROUSEL_DATA.length - 1) {
       // Scroll to the next item
       flatListRef.current?.scrollToIndex({ index: currentIndex + 1 });
     } else {
-      router.replace("/register");
+      await AsyncStorageUtils.setItem(StorageKeys.HIDE_SPLASH_SCREEN, true);
+      router.push("/(authentication)");
     }
   };
   return (
-    <SafeAreaView className='flex-1 bg-white'>
-      <View className='flex-1 items-center justify-between'>
+    <SafeAreaView className='flex-1'>
+      <ThemedView className='flex-1 items-center justify-between'>
         <Link
-          href='/register'
+          href='/(authentication)'
           className='absolute top-10 right-10 z-10'
           asChild
-          replace
         >
-          <Text className='text-[#6D4C41] text-base font-semibold'>Skip</Text>
+          <ThemedText className='text-base font-semibold'>Skip</ThemedText>
         </Link>
 
         <Animated.FlatList
@@ -82,25 +81,24 @@ const OnboardingScreen = () => {
           }
         />
 
-        <View className='w-full items-center flex-row justify-between p-5'>
+        <View className='w-full items-center flex-row justify-between p-10 mb-6'>
           <Pagination
             items={CAROUSEL_DATA}
             currentIndex={currentIndex}
             scrollX={scrollX}
           />
 
-          <TouchableOpacity
-            className='bg-[#6D4C41] rounded-lg py-2 px-5'
-            onPress={handleNext}
-          >
-            <Text className='text-white text-base font-semibold'>
-              {currentIndex === CAROUSEL_DATA.length - 1
+          <ThemedButton
+            className='rounded-lg py-2 px-5'
+            text={
+              currentIndex === CAROUSEL_DATA.length - 1
                 ? "Login/Register →"
-                : "Next →"}
-            </Text>
-          </TouchableOpacity>
+                : "Next →"
+            }
+            onPress={handleNext}
+          />
         </View>
-      </View>
+      </ThemedView>
     </SafeAreaView>
   );
 };

@@ -6,6 +6,7 @@ import Animated, {
   SharedValue,
   useAnimatedStyle,
 } from "react-native-reanimated";
+import { useThemeColor } from "@/hooks/useThemeColor";
 
 interface PaginationProps {
   items: any[];
@@ -16,6 +17,9 @@ interface PaginationProps {
 const { width } = Dimensions.get("window");
 
 const Pagination = ({ items, currentIndex, scrollX }: PaginationProps) => {
+  const backgroundActiveColor = useThemeColor({}, "tint");
+  const backgroundColor = useThemeColor({}, "tabIconDefault");
+
   return (
     <View className='flex-row gap-x-1'>
       {items.map((_, index) => {
@@ -33,10 +37,16 @@ const Pagination = ({ items, currentIndex, scrollX }: PaginationProps) => {
         return (
           <Animated.View
             key={index}
-            className={`h-2 rounded-full ${
-              currentIndex === index ? "bg-[#6D4C41]" : "bg-[rgba(0,0,0,0.2)]"
-            }`}
-            style={pgAnimation}
+            className='h-2 rounded-full'
+            style={[
+              {
+                backgroundColor:
+                  currentIndex === index
+                    ? backgroundActiveColor
+                    : backgroundColor,
+              },
+              pgAnimation,
+            ]}
           />
         );
       })}

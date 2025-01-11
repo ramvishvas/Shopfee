@@ -7,6 +7,7 @@ import Animated, {
   SharedValue,
   useAnimatedStyle,
 } from "react-native-reanimated";
+import { ThemedText } from "../themes/ThemedText";
 
 const { width } = Dimensions.get("window");
 
@@ -52,20 +53,21 @@ const Card = ({ data, index, scrollX }: CardProps) => {
 
   return (
     <Animated.View
-      className='flex-1 items-center justify-center p-5'
-      style={[{ width }, rnAnimatedStyle]}
+      className='flex-1 items-center justify-center px-5'
+      style={[{ width: width }, rnAnimatedStyle]}
     >
-      <View className='w-full items-center justify-center'>
+      <View className='items-center justify-center'>
         <Image source={data.image} resizeMode='contain' className='w-50 h-50' />
       </View>
 
       <View className='mt-20'>
-        <Text className='text-3xl font-bold text-[#333333] mb-5'>
+        <ThemedText className='text-3xl font-bold mb-5'>
           {data.title}
-        </Text>
-        <Text className='text-base leading-5 text-black'>
+        </ThemedText>
+
+        <ThemedText className='text-base leading-5 text-black'>
           {data.description}
-        </Text>
+        </ThemedText>
       </View>
     </Animated.View>
   );
