@@ -1,7 +1,7 @@
 import { Icon2Img, OTPImg } from "@/assets/images";
-import { ThemedButton } from "@/components/themes/ThemedButton";
+import { ThemedButton } from "@/components/PrimaryButton";
 import { ThemedModal } from "@/components/themes/ThemedModal";
-import { ThemedSecondaryButton } from "@/components/themes/ThemedSecondaryButton";
+import { ThemedSecondaryButton } from "@/components/ThemedSecondaryButton";
 import { ThemedText } from "@/components/themes/ThemedText";
 import { ThemedTextInput } from "@/components/themes/ThemedTextInput";
 import { ThemedView } from "@/components/themes/ThemedView";

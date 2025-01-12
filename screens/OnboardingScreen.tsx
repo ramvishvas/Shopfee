@@ -1,7 +1,7 @@
 import { CAROUSEL_DATA } from "@/assets/data/onboarding";
 import Card from "@/components/onboarding/Card";
 import Pagination from "@/components/onboarding/Pagination";
-import { ThemedButton } from "@/components/themes/ThemedButton";
+import { ThemedButton } from "@/components/PrimaryButton";
 import { ThemedText } from "@/components/themes/ThemedText";
 import { ThemedView } from "@/components/themes/ThemedView";
 import AsyncStorageUtils, { StorageKeys } from "@/utils/AsyncStorageUtils";
