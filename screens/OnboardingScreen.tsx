@@ -1,10 +1,10 @@
 import { CAROUSEL_DATA } from "@/assets/data/onboarding";
 import Card from "@/components/onboarding/Card";
 import Pagination from "@/components/onboarding/Pagination";
-import { ThemedButton } from "@/components/PrimaryButton";
+import PrimaryButton from "@/components/PrimaryButton";
 import { ThemedText } from "@/components/themes/ThemedText";
 import { ThemedView } from "@/components/themes/ThemedView";
-import AsyncStorageUtils, { StorageKeys } from "@/utils/AsyncStorageUtils";
+import AsyncStorageUtils, { AsyncStorageKeys } from "@/utils/AsyncStorageUtils";
 import { Link, router } from "expo-router";
 import React, { useRef, useState } from "react";
 import { View, ViewToken, FlatList } from "react-native";
@@ -49,7 +49,10 @@ const OnboardingScreen = () => {
       // Scroll to the next item
       flatListRef.current?.scrollToIndex({ index: currentIndex + 1 });
     } else {
-      await AsyncStorageUtils.setItem(StorageKeys.HIDE_SPLASH_SCREEN, true);
+      await AsyncStorageUtils.setItem(
+        AsyncStorageKeys.HIDE_SPLASH_SCREEN,
+        true
+      );
       router.push("/(authentication)");
     }
   };
@@ -88,7 +91,7 @@ const OnboardingScreen = () => {
             scrollX={scrollX}
           />
 
-          <ThemedButton
+          <PrimaryButton
             className='rounded-lg py-2 px-5'
             text={
               currentIndex === CAROUSEL_DATA.length - 1

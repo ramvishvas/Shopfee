@@ -8,6 +8,7 @@ import PrimaryButton from "./PrimaryButton";
 import { Ionicons } from "@expo/vector-icons";
 import SecondaryButton from "./SecondaryButton";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
+import ThemeChanger from "./ThemeChanger";
 
 const ComponentDriver = () => {
   const [checked, setChecked] = React.useState(false);
@@ -189,6 +190,7 @@ const ComponentDriver = () => {
               type='ghost'
               disabled
             />
+            <ThemeChanger />
           </View>
         </ScrollView>
       </SafeAreaView>

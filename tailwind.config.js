@@ -8,10 +8,6 @@ module.exports = {
   presets: [require("nativewind/preset")],
   theme: {
     extend: {
-      colors: {
-        primary: "#6D4C41", // Your app's primary color
-        secondary: "#A36F5B", // Complementary shade
-      },
       width: {
         50: "200px",
       },

@@ -28,8 +28,8 @@ const PrimaryButton: React.FC<PrimaryButtonButtonProps> = ({
   disabled = false,
   ...otherProps
 }) => {
-  const backgroundColor = useThemeColor({}, "buttonBackground");
-  const textColor = useThemeColor({}, "buttonText");
+  const backgroundColor = useThemeColor({}, "primarybuttoncolor");
+  const textColor = useThemeColor({}, "primarybuttontextcolor");
 
   const sizeStyles = size === "normal" ? "px-5 py-3" : "px-4 py-2";
 

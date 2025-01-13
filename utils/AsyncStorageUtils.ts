@@ -3,8 +3,9 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 /**
  * Centralized key management for AsyncStorage.
  */
-export enum StorageKeys {
+export enum AsyncStorageKeys {
   HIDE_SPLASH_SCREEN = "HIDE_SPLASH_SCREEN",
+  ACTIVE_THEME = "ACTIVE_THEME",
 }
 
 /**
@@ -16,7 +17,7 @@ class AsyncStorageUtils {
    * @param key The key under which the value will be stored.
    * @param value The value to store.
    */
-  static async setItem<T>(key: StorageKeys, value: T): Promise<void> {
+  static async setItem<T>(key: AsyncStorageKeys, value: T): Promise<void> {
     try {
       const jsonValue = JSON.stringify(value);
       await AsyncStorage.setItem(key, jsonValue);
@@ -30,7 +31,7 @@ class AsyncStorageUtils {
    * @param key The key of the value to retrieve.
    * @returns The parsed value or `null` if not found.
    */
-  static async getItem<T>(key: StorageKeys): Promise<T | null> {
+  static async getItem<T>(key: AsyncStorageKeys): Promise<T | null> {
     try {
       const jsonValue = await AsyncStorage.getItem(key);
       return jsonValue != null ? JSON.parse(jsonValue) : null;
@@ -44,7 +45,7 @@ class AsyncStorageUtils {
    * Remove a value from AsyncStorage.
    * @param key The key of the value to remove.
    */
-  static async removeItem(key: StorageKeys): Promise<void> {
+  static async removeItem(key: AsyncStorageKeys): Promise<void> {
     try {
       await AsyncStorage.removeItem(key);
     } catch (error) {
@@ -82,7 +83,7 @@ class AsyncStorageUtils {
    * @returns An array of key-value pairs.
    */
   static async multiGet(
-    keys: StorageKeys[]
+    keys: AsyncStorageKeys[]
   ): Promise<[string, string | null][]> {
     try {
       return (await AsyncStorage.multiGet(keys)) as [string, string | null][];
