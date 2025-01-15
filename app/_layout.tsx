@@ -15,6 +15,8 @@ import "../global.css";
 import { useColorScheme } from "@/hooks/useColorScheme";
 import { Provider } from "react-redux";
 import { store } from "@/redux/store";
+import { Colors } from "@/constants/Colors";
+import { ITheme } from "@/components/ThemeChanger";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -35,9 +37,33 @@ export default function RootLayout() {
     return null;
   }
 
+  const DefaultDarkTheme = {
+    ...DarkTheme,
+    colors: {
+      ...DarkTheme.colors,
+      ...Colors.dark,
+    },
+  };
+
+  const DefaultLightTheme = {
+    ...DefaultTheme,
+    colors: {
+      ...DefaultTheme.colors,
+      ...Colors.light,
+    },
+  };
+
+  console.log("colorScheme", colorScheme);
+  console.log("DarkTheme", DarkTheme);
+  console.log("DefaultTheme", DefaultTheme);
+
   return (
     <Provider store={store}>
-      <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+      <ThemeProvider
+        value={
+          colorScheme === ITheme.Dark ? DefaultDarkTheme : DefaultLightTheme
+        }
+      >
         <Stack>
           <Stack.Screen name='index' options={{ headerShown: false }} />
           <Stack.Screen

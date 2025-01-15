@@ -1,13 +1,13 @@
 import { Icon2Img, OTPImg } from "@/assets/images";
-import { ThemedButton } from "@/components/PrimaryButton";
+import PrimaryButton from "@/components/PrimaryButton";
+import SecondaryButton from "@/components/SecondaryButton";
 import { ThemedModal } from "@/components/themes/ThemedModal";
-import { ThemedSecondaryButton } from "@/components/ThemedSecondaryButton";
 import { ThemedText } from "@/components/themes/ThemedText";
 import { ThemedTextInput } from "@/components/themes/ThemedTextInput";
 import { ThemedView } from "@/components/themes/ThemedView";
 import { Link, router } from "expo-router";
 import React, { useState } from "react";
-import { View, Text, Image } from "react-native";
+import { View, Image } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const LoginScreen = () => {
@@ -39,7 +39,7 @@ const LoginScreen = () => {
             <ThemedTextInput placeholder='Input your number' />
           </View>
 
-          <ThemedButton
+          <PrimaryButton
             text='Login'
             className='mt-8 w-full py-3 rounded-lg items-center'
             onPress={toggleModal}
@@ -74,7 +74,7 @@ const LoginScreen = () => {
 
         <View className='flex-row justify-between items-center gap-x-10'>
           <View className='flex-1 flex-row justify-center items-center'>
-            <ThemedSecondaryButton
+            <SecondaryButton
               text='Cancel'
               onPress={toggleModal}
               textClassName='text-center font-semibold'
@@ -83,7 +83,7 @@ const LoginScreen = () => {
           </View>
 
           <View className='flex-1'>
-            <ThemedButton
+            <PrimaryButton
               text='Confirm'
               onPress={onConfirm}
               textClassName='text-center font-semibold'

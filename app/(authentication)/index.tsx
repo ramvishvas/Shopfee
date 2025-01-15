@@ -1,7 +1,6 @@
 import { Icon2Img, OTPImg } from "@/assets/images";
-import { ThemedButton } from "@/components/PrimaryButton";
+import PrimaryButton from "@/components/PrimaryButton";
 import { ThemedModal } from "@/components/themes/ThemedModal";
-import { ThemedSecondaryButton } from "@/components/ThemedSecondaryButton";
 import { ThemedText } from "@/components/themes/ThemedText";
 import { ThemedTextInput } from "@/components/themes/ThemedTextInput";
 import { ThemedView } from "@/components/themes/ThemedView";
@@ -58,7 +57,7 @@ const RegisterScreen = () => {
             </ThemedText>
           </View>
 
-          <ThemedButton
+          <PrimaryButton
             text='Register'
             className='mt-8 w-full py-3 rounded-lg items-center'
             onPress={toggleModal}
@@ -91,7 +90,7 @@ const RegisterScreen = () => {
 
         <View className='flex-row justify-between items-center gap-x-10'>
           <View className='flex-1 flex-row justify-center items-center'>
-            <ThemedSecondaryButton
+            <PrimaryButton
               text='Cancel'
               onPress={toggleModal}
               textClassName='text-center font-semibold'
@@ -100,7 +99,7 @@ const RegisterScreen = () => {
           </View>
 
           <View className='flex-1'>
-            <ThemedButton
+            <PrimaryButton
               text='Confirm'
               onPress={onConfirm}
               textClassName='text-center font-semibold'

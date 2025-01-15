@@ -7,7 +7,7 @@ import {
 import React from "react";
 import { useColorScheme } from "@/hooks/useColorScheme";
 
-enum Theme {
+export enum ITheme {
   Dark = "dark",
   Light = "light",
 }
@@ -27,21 +27,21 @@ const ThemeChanger = () => {
   return (
     <View className='flex-1 items-center justify-center flex-row gap-x-2 bg-ui-primarybackgroundcolor p-10'>
       <TouchableOpacity
-        onPress={() => onPress(Theme.Light)}
+        onPress={() => onPress(ITheme.Light)}
         className={`${buttonBaseStyle} ${
-          selected === Theme.Light ? "border-green-500" : "border-gray-400"
+          selected === ITheme.Light ? "border-green-500" : "border-gray-400"
         }`}
       >
-        {selected === Theme.Light && <View className={indicatorStyle} />}
+        {selected === ITheme.Light && <View className={indicatorStyle} />}
       </TouchableOpacity>
 
       <TouchableOpacity
-        onPress={() => onPress(Theme.Dark)}
+        onPress={() => onPress(ITheme.Dark)}
         className={`${buttonBaseStyle} ${
-          selected === Theme.Dark ? "border-green-500" : "border-gray-400"
+          selected === ITheme.Dark ? "border-green-500" : "border-gray-400"
         }`}
       >
-        {selected === Theme.Dark && <View className={indicatorStyle} />}
+        {selected === ITheme.Dark && <View className={indicatorStyle} />}
       </TouchableOpacity>
     </View>
   );

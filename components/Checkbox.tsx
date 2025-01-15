@@ -1,6 +1,7 @@
 import React from "react";
 import { View, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons"; // Using Ionicons for the checkmark
+import { useThemeColor } from "@/hooks/useThemeColor";
 
 interface CheckboxProps {
   selected: boolean;
@@ -8,12 +9,17 @@ interface CheckboxProps {
 }
 
 const Checkbox: React.FC<CheckboxProps> = ({ selected, onPress }) => {
+  const success = useThemeColor({}, "success");
+  const textColor = useThemeColor({}, "text");
+
   return (
     <TouchableOpacity
       onPress={onPress}
-      className={`w-9 h-9 border-4 rounded-md ${
-        selected ? "bg-green-500 border-green-500" : "border-gray-500"
-      } flex items-center justify-center`}
+      className='w-9 h-9 border-4 rounded-md flex items-center justify-center'
+      style={{
+        borderColor: selected ? success : textColor,
+        backgroundColor: selected ? success : undefined,
+      }}
     >
       {selected && (
         <Ionicons

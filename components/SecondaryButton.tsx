@@ -28,7 +28,7 @@ const SecondaryButton: React.FC<SecondaryButtonButtonProps> = ({
   disabled = false,
   ...otherProps
 }) => {
-  const backgroundColor = useThemeColor({}, "buttonBackground");
+  const textColor = useThemeColor({}, "secondarybuttontextcolor");
   const sizeStyles = size === "normal" ? "px-5 py-3" : "px-4 py-2";
   const borderStyles = type === "default" ? `border` : "";
 
@@ -36,7 +36,7 @@ const SecondaryButton: React.FC<SecondaryButtonButtonProps> = ({
     <Pressable
       className={`rounded-2xl flex-row items-center justify-center gap-x-2 ${borderStyles} ${sizeStyles} ${className}`}
       style={{
-        borderColor: backgroundColor,
+        borderColor: textColor,
         opacity: disabled ? 0.6 : 1,
       }}
       disabled={disabled}
@@ -46,14 +46,14 @@ const SecondaryButton: React.FC<SecondaryButtonButtonProps> = ({
         <Ionicons
           name={leftIconName}
           size={size === "normal" ? 16 : 14}
-          color={backgroundColor}
+          color={textColor}
         />
       ) : (
         leftIcon
       )}
       <Text
         className={`font-medium ${textClassName}`}
-        style={{ color: backgroundColor }}
+        style={{ color: textColor }}
       >
         {text}
       </Text>
@@ -61,7 +61,7 @@ const SecondaryButton: React.FC<SecondaryButtonButtonProps> = ({
         <Ionicons
           name={rightIconName}
           size={size === "normal" ? 16 : 14}
-          color={backgroundColor}
+          color={textColor}
         />
       ) : (
         rightIcon
