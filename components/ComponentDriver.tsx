@@ -9,6 +9,8 @@ import { Ionicons } from "@expo/vector-icons";
 import SecondaryButton from "./SecondaryButton";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import ThemeChanger from "./ThemeChanger";
+import AppTabs from "./AppTabs";
+import SearchBar from "./SearchBar";
 
 const ComponentDriver = () => {
   const [checked, setChecked] = React.useState(false);
@@ -23,20 +25,17 @@ const ComponentDriver = () => {
           <View className='flex-1 items-center justify-center gap-y-2'>
             <RadioButton selected={checked} onPress={handleButtonPress} />
             <Checkbox selected={checked} onPress={handleButtonPress} />
-
             {/* // Tags */}
             <Tag label='Status' type='gray' />
             <Tag label='Status' type='green' />
             <Tag label='Status' type='orange' />
             <Tag label='Status' type='red' />
             <Tag label='Status' type='blue' />
-
             {/* // Labels */}
             <Label text='Label' type='primary' />
             <Label text='Label' type='secondary' />
             <Label text='Label' type='tertiary' />
             <Label text='Label' type='quaternary' />
-
             {/* // Primary Buttons */}
             <PrimaryButton
               text='Primary Normal Button'
@@ -44,7 +43,6 @@ const ComponentDriver = () => {
               leftIconName='add'
               rightIconName='heart'
             />
-
             <PrimaryButton
               text='Primary Normal Button Disabled'
               onPress={() =>
@@ -54,7 +52,6 @@ const ComponentDriver = () => {
               rightIcon={<Ionicons name='heart' size={16} color='white' />}
               disabled
             />
-
             <PrimaryButton
               text='Primary Gost Normal Button'
               onPress={() => console.log("Primary Gost Button Pressed")}
@@ -62,7 +59,6 @@ const ComponentDriver = () => {
               rightIconName='heart'
               type='ghost'
             />
-
             <PrimaryButton
               text='Primary Gost Normal Button Disabled'
               onPress={() =>
@@ -73,7 +69,6 @@ const ComponentDriver = () => {
               type='ghost'
               disabled
             />
-
             <PrimaryButton
               text='Primary Normal Button'
               onPress={() => console.log("Primary Normal Button Pressed")}
@@ -81,7 +76,6 @@ const ComponentDriver = () => {
               rightIconName='heart'
               size='small'
             />
-
             <PrimaryButton
               text='Primary Normal Button Disabled'
               onPress={() =>
@@ -92,7 +86,6 @@ const ComponentDriver = () => {
               size='small'
               disabled
             />
-
             <PrimaryButton
               text='Primary Gost Normal Button'
               onPress={() => console.log("Primary Gost Button Pressed")}
@@ -101,7 +94,6 @@ const ComponentDriver = () => {
               size='small'
               type='ghost'
             />
-
             <PrimaryButton
               text='Primary Gost Normal Button Disabled'
               onPress={() =>
@@ -113,7 +105,6 @@ const ComponentDriver = () => {
               type='ghost'
               disabled
             />
-
             {/* // Secondary Buttons */}
             <SecondaryButton
               text='Secondary Normal Button'
@@ -121,7 +112,6 @@ const ComponentDriver = () => {
               leftIconName='add'
               rightIconName='heart'
             />
-
             <SecondaryButton
               text='Secondary Normal Button Disabled'
               onPress={() =>
@@ -131,7 +121,6 @@ const ComponentDriver = () => {
               rightIcon={<Ionicons name='heart' size={16} color='white' />}
               disabled
             />
-
             <SecondaryButton
               text='Secondary Gost Normal Button'
               onPress={() => console.log("Secondary Gost Button Pressed")}
@@ -139,7 +128,6 @@ const ComponentDriver = () => {
               rightIconName='heart'
               type='ghost'
             />
-
             <SecondaryButton
               text='Secondary Gost Normal Button Disabled'
               onPress={() =>
@@ -150,7 +138,6 @@ const ComponentDriver = () => {
               type='ghost'
               disabled
             />
-
             <SecondaryButton
               text='Secondary Normal Button'
               onPress={() => console.log("Secondary Normal Button Pressed")}
@@ -158,7 +145,6 @@ const ComponentDriver = () => {
               rightIconName='heart'
               size='small'
             />
-
             <SecondaryButton
               text='Secondary Normal Button Disabled'
               onPress={() =>
@@ -169,7 +155,6 @@ const ComponentDriver = () => {
               size='small'
               disabled
             />
-
             <SecondaryButton
               text='Secondary Gost Normal Button'
               onPress={() => console.log("Secondary Gost Button Pressed")}
@@ -178,7 +163,6 @@ const ComponentDriver = () => {
               size='small'
               type='ghost'
             />
-
             <SecondaryButton
               text='Secondary Gost Normal Button Disabled'
               onPress={() =>
@@ -190,7 +174,14 @@ const ComponentDriver = () => {
               type='ghost'
               disabled
             />
+
             <ThemeChanger />
+
+            {/* Tabs */}
+            <AppTabs tabs={["Tab 1", "Tab 2", "Tab 3", "Tab 4", "Tab 5"]} />
+
+            {/* Search Bar */}
+            <SearchBar />
           </View>
         </ScrollView>
       </SafeAreaView>
