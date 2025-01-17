@@ -3,13 +3,21 @@ import { View } from "react-native";
 
 import OnboardingScreen from "@/screens/OnboardingScreen";
 import SplashAnimation from "@/screens/SplashAnimation";
-import RadioButton from "@/components/RadioButton";
-import ComponentDriver from "@/components/ComponentDriver";
+import AsyncStorageUtils, { AsyncStorageKeys } from "@/utils/AsyncStorageUtils";
+import { router } from "expo-router";
 
 export default function Index() {
   const [showOnboarding, setShowOnboarding] = useState(false);
 
-  const onSplashAnimationEnd = () => {
+  const onSplashAnimationEnd = async () => {
+    const hideSplash = await AsyncStorageUtils.getItem(
+      AsyncStorageKeys.HIDE_SPLASH_SCREEN
+    );
+
+    if (hideSplash) {
+      router.push("/(authentication)");
+      return;
+    }
     setShowOnboarding(true);
   };
 
@@ -18,8 +26,7 @@ export default function Index() {
       {!showOnboarding ? (
         <SplashAnimation onAnimationEnd={onSplashAnimationEnd} />
       ) : (
-        // <OnboardingScreen />
-        <ComponentDriver />
+        <OnboardingScreen />
       )}
     </View>
   );

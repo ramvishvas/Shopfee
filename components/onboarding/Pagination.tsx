@@ -17,7 +17,7 @@ interface PaginationProps {
 const { width } = Dimensions.get("window");
 
 const Pagination = ({ items, currentIndex, scrollX }: PaginationProps) => {
-  const backgroundActiveColor = useThemeColor({}, "tint");
+  const backgroundActiveColor = useThemeColor({}, "primarybuttoncolor");
   const backgroundColor = useThemeColor({}, "tabIconDefault");
 
   return (

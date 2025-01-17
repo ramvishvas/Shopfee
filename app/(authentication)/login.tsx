@@ -1,16 +1,26 @@
 import { Icon2Img, OTPImg } from "@/assets/images";
+import AuthContainer from "@/components/auth/AuthContainer";
+import BrandLogo from "@/components/auth/BrandLogo";
+import InputText from "@/components/InputText";
 import PrimaryButton from "@/components/PrimaryButton";
 import SecondaryButton from "@/components/SecondaryButton";
 import { ThemedModal } from "@/components/themes/ThemedModal";
 import { ThemedText } from "@/components/themes/ThemedText";
-import { ThemedTextInput } from "@/components/themes/ThemedTextInput";
-import { ThemedView } from "@/components/themes/ThemedView";
 import { Link, router } from "expo-router";
 import React, { useState } from "react";
 import { View, Image } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 
 const LoginScreen = () => {
+  // Form State
+  const [form, setForm] = useState({
+    number: "",
+  });
+
+  // Error State
+  const [errors, setErrors] = useState({
+    number: "",
+  });
+
   const [isModalVisible, setModalVisible] = useState(false);
 
   const toggleModal = () => {
@@ -22,42 +32,68 @@ const LoginScreen = () => {
     router.push("/(authentication)/confirm-password");
   };
 
+  // Validation Logic
+  const validateForm = () => {
+    let isValid = true;
+    const newErrors = { number: "" };
+
+    if (!form.number.trim()) {
+      newErrors.number = "Number is required.";
+      isValid = false;
+    } else if (!/^\d{10}$/.test(form.number)) {
+      newErrors.number = "Enter a valid 10-digit phone number.";
+      isValid = false;
+    }
+
+    setErrors(newErrors);
+    return isValid;
+  };
+
+  // Submit Handler
+  const handleLogin = () => {
+    if (validateForm()) {
+      setModalVisible(true);
+    }
+  };
+
+  // Handle Input Changes
+  const handleInputChange = (field: string, value: string) => {
+    setForm({ ...form, [field]: value });
+    setErrors({ ...errors, [field]: "" }); // Clear field-specific error
+  };
+
   return (
-    <SafeAreaView className='flex-1'>
-      <ThemedView className='flex-1 px-5 py-10'>
-        <View className='flex-1 justify-center'>
-          <View className='items-center mb-8'>
-            <Image
-              source={Icon2Img}
-              className='w-60 h-32'
-              resizeMode='contain'
-            />
-          </View>
+    <AuthContainer>
+      <BrandLogo image={Icon2Img} />
 
-          <View>
-            <ThemedText className='mb-2'>Number</ThemedText>
-            <ThemedTextInput placeholder='Input your number' />
-          </View>
+      {/* Phone Number Input */}
+      <InputText
+        placeholder='Input your number'
+        label='Number'
+        value={form.number}
+        error={errors.number}
+        className='mb-4'
+        onChangeText={(value) => handleInputChange("number", value)}
+      />
 
-          <PrimaryButton
-            text='Login'
-            className='mt-8 w-full py-3 rounded-lg items-center'
-            onPress={toggleModal}
-          />
-        </View>
+      {/* Register Button */}
+      <PrimaryButton
+        text='Register'
+        className='mt-8 w-full py-3 rounded-lg items-center'
+        onPress={handleLogin}
+      />
 
-        {/* Login Option */}
-        <View className='mt-5 items-center shrink-0'>
-          <ThemedText className='text-sm text-gray-500'>
-            Don’t have an account?{" "}
-            <Link href='/(authentication)' asChild replace>
-              <ThemedText className='font-semibold underline'>
-                Register
-              </ThemedText>
-            </Link>
-          </ThemedText>
-        </View>
-      </ThemedView>
+      {/* Login Option */}
+      <View className='mt-5 items-center shrink-0'>
+        <ThemedText className='text-sm text-gray-500'>
+          Don’t have an account?{" "}
+          <Link href='/(authentication)' asChild replace>
+            <ThemedText className='font-semibold underline'>
+              Register
+            </ThemedText>
+          </Link>
+        </ThemedText>
+      </View>
 
       {/* Themed Modal */}
       <ThemedModal visible={isModalVisible} onRequestClose={toggleModal}>
@@ -92,7 +128,7 @@ const LoginScreen = () => {
           </View>
         </View>
       </ThemedModal>
-    </SafeAreaView>
+    </AuthContainer>
   );
 };
 

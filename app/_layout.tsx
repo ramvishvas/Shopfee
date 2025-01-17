@@ -53,10 +53,6 @@ export default function RootLayout() {
     },
   };
 
-  console.log("colorScheme", colorScheme);
-  console.log("DarkTheme", DarkTheme);
-  console.log("DefaultTheme", DefaultTheme);
-
   return (
     <Provider store={store}>
       <ThemeProvider

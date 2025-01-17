@@ -1,82 +1,139 @@
 import { Icon2Img, OTPImg } from "@/assets/images";
+import AuthContainer from "@/components/auth/AuthContainer";
+import BrandLogo from "@/components/auth/BrandLogo";
+import InputText from "@/components/InputText";
 import PrimaryButton from "@/components/PrimaryButton";
 import { ThemedModal } from "@/components/themes/ThemedModal";
 import { ThemedText } from "@/components/themes/ThemedText";
-import { ThemedTextInput } from "@/components/themes/ThemedTextInput";
-import { ThemedView } from "@/components/themes/ThemedView";
+import { sendOtp } from "@/redux/otpSlice";
+import { useAppDispatch } from "@/redux/store";
 import { Link, router } from "expo-router";
 import React, { useState } from "react";
 import { View, Text, Image } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 
 const RegisterScreen = () => {
+  // Form State
+  const [form, setForm] = useState({
+    name: "",
+    number: "",
+  });
+
+  // Error State
+  const [errors, setErrors] = useState({
+    name: "",
+    number: "",
+  });
+
   const [isModalVisible, setModalVisible] = useState(false);
 
-  const toggleModal = () => {
-    setModalVisible(!isModalVisible);
+  const dispatch = useAppDispatch();
+
+  // Validation Logic
+  const validateForm = () => {
+    let isValid = true;
+    const newErrors = { name: "", number: "" };
+
+    if (!form.name.trim()) {
+      newErrors.name = "Name is required.";
+      isValid = false;
+    }
+
+    if (!form.number.trim()) {
+      newErrors.number = "Number is required.";
+      isValid = false;
+    } else if (!/^\d{10}$/.test(form.number)) {
+      newErrors.number = "Enter a valid 10-digit phone number.";
+      isValid = false;
+    }
+
+    setErrors(newErrors);
+    return isValid;
   };
 
+  // Handle Input Changes
+  const handleInputChange = (field: string, value: string) => {
+    setForm({ ...form, [field]: value });
+    setErrors({ ...errors, [field]: "" }); // Clear field-specific error
+  };
+
+  // Submit Handler
+  const handleRegister = () => {
+    if (validateForm()) {
+      setModalVisible(true);
+    }
+  };
+
+  // Modal Confirm Action
   const onConfirm = () => {
     setModalVisible(false);
+
+    dispatch(sendOtp(form.number));
+
     router.push("/(authentication)/otp");
   };
 
   return (
-    <SafeAreaView className='flex-1'>
-      <ThemedView className='flex-1 px-5 py-10'>
-        <View className='mt-10 flex-1'>
-          <View className='items-center mb-16'>
-            <Image
-              source={Icon2Img}
-              className='w-60 h-32'
-              resizeMode='contain'
-            />
-          </View>
+    <AuthContainer>
+      {/* Logo */}
+      <BrandLogo image={Icon2Img} />
 
-          <View className='mb-6'>
-            <ThemedText className='mb-2'>Name</ThemedText>
-            <ThemedTextInput placeholder='Input your name' />
-          </View>
-          <View>
-            <ThemedText className='mb-2'>Number</ThemedText>
-            <ThemedTextInput placeholder='Input your number' />
-          </View>
+      {/* Name Input */}
+      <InputText
+        placeholder='Input your name'
+        label='Name'
+        value={form.name}
+        error={errors.name}
+        className='mb-4'
+        onChangeText={(value) => handleInputChange("name", value)}
+      />
 
-          {/* Terms and Conditions */}
-          <View className='mt-5'>
-            <ThemedText className='text-center text-sm text-gray-500 px-5'>
-              By tapping <Text className='font-semibold'>"Register"</Text> you
-              agree to our{" "}
-              <ThemedText className='text-blue-500 underline'>
-                Terms of Use
-              </ThemedText>{" "}
-              and{" "}
-              <ThemedText className='text-blue-500 underline'>
-                Privacy Policy
-              </ThemedText>
-            </ThemedText>
-          </View>
+      {/* Phone Number Input */}
+      <InputText
+        placeholder='Input your number'
+        label='Number'
+        value={form.number}
+        error={errors.number}
+        className='mb-4'
+        onChangeText={(value) => handleInputChange("number", value)}
+      />
 
-          <PrimaryButton
-            text='Register'
-            className='mt-8 w-full py-3 rounded-lg items-center'
-            onPress={toggleModal}
-          />
-        </View>
-
-        {/* Login Option */}
-        <View className='mt-5 items-center shrink-0'>
-          <ThemedText className='text-sm text-gray-500'>
-            Have an account?{" "}
-            <Link href='/(authentication)/login' asChild replace>
-              <ThemedText className='font-semibold underline'>Login</ThemedText>
-            </Link>
+      {/* Terms and Conditions */}
+      <View className='mt-1'>
+        <ThemedText className='text-center text-sm text-gray-500 px-5'>
+          By tapping <Text className='font-semibold'>"Register"</Text> you agree
+          to our{" "}
+          <ThemedText className='text-blue-500 underline'>
+            Terms of Use
+          </ThemedText>{" "}
+          and{" "}
+          <ThemedText className='text-blue-500 underline'>
+            Privacy Policy
           </ThemedText>
-        </View>
-      </ThemedView>
+        </ThemedText>
+      </View>
+
+      {/* Register Button */}
+      <PrimaryButton
+        text='Register'
+        className='mt-8 w-full py-3 rounded-lg items-center'
+        onPress={handleRegister}
+      />
+
+      {/* Login Option */}
+      <View className='mt-5 items-center shrink-0'>
+        <ThemedText className='text-sm text-gray-500'>
+          Have an account?{" "}
+          <Link href='/(authentication)/login' asChild replace>
+            <ThemedText className='font-semibold underline'>Login</ThemedText>
+          </Link>
+        </ThemedText>
+      </View>
 
       {/* Themed Modal */}
-      <ThemedModal visible={isModalVisible} onRequestClose={toggleModal}>
+      <ThemedModal
+        visible={isModalVisible}
+        onRequestClose={() => setModalVisible(false)}
+      >
         <View className='justify-center items-center'>
           <Image source={OTPImg} className='w-60 h-60' resizeMode='contain' />
         </View>
@@ -84,7 +141,7 @@ const RegisterScreen = () => {
           Send OTP code
         </ThemedText>
         <ThemedText className='text-center text-gray-500 my-6'>
-          We will send the OTP code via SMS. Make sure the number 081234567891
+          We will send the OTP code via SMS. Make sure the number {form.number}{" "}
           is active
         </ThemedText>
 
@@ -92,7 +149,7 @@ const RegisterScreen = () => {
           <View className='flex-1 flex-row justify-center items-center'>
             <PrimaryButton
               text='Cancel'
-              onPress={toggleModal}
+              onPress={() => setModalVisible(false)}
               textClassName='text-center font-semibold'
               className='py-3 px-4 rounded-full flex-1'
             />
@@ -108,7 +165,7 @@ const RegisterScreen = () => {
           </View>
         </View>
       </ThemedModal>
-    </SafeAreaView>
+    </AuthContainer>
   );
 };
 

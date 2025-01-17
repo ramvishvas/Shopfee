@@ -1,11 +1,16 @@
 import React, { useState, useRef } from "react";
 import { View, Text, Pressable, Animated } from "react-native";
+import { ThemedText } from "./themes/ThemedText";
+import { useThemeColor } from "@/hooks/useThemeColor";
 
 interface AppTabsProps {
   tabs: string[];
 }
 
 const AppTabs: React.FC<AppTabsProps> = ({ tabs }) => {
+  const borderColor = useThemeColor({}, "border");
+  const textColor = useThemeColor({}, "text");
+
   const [activeTab, setActiveTab] = useState<number>(0);
   const translateX = useRef(new Animated.Value(0)).current; // Animated value for the sliding indicator
   const [tabWidth, setTabWidth] = useState<number>(0); // Dynamic tab width based on parent
@@ -28,7 +33,11 @@ const AppTabs: React.FC<AppTabsProps> = ({ tabs }) => {
   };
 
   return (
-    <View className='border-b-2 border-gray-300 w-full' onLayout={onLayout}>
+    <View
+      className='border-b-2 w-full'
+      onLayout={onLayout}
+      style={{ borderColor }}
+    >
       <View className='flex-row'>
         {tabs.map((text, index) => (
           <Pressable
@@ -36,13 +45,13 @@ const AppTabs: React.FC<AppTabsProps> = ({ tabs }) => {
             key={text}
             onPress={() => onTabPress(index)}
           >
-            <Text
+            <ThemedText
               className={`text-center text-base font-semibold ${
-                index === activeTab ? "text-gray-800" : "text-gray-500"
+                index === activeTab ? "opacity-100" : "opacity-50"
               }`}
             >
               {text}
-            </Text>
+            </ThemedText>
           </Pressable>
         ))}
       </View>
@@ -54,7 +63,7 @@ const AppTabs: React.FC<AppTabsProps> = ({ tabs }) => {
             bottom: -2,
             height: 4,
             width: tabWidth,
-            backgroundColor: "#4B5563",
+            backgroundColor: textColor,
             transform: [{ translateX }],
             borderRadius: 2,
           }}

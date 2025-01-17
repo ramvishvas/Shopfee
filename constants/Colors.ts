@@ -22,6 +22,7 @@ export const Colors = {
     primarybuttoncolor: "#6D4C41",
     primarybuttontextcolor: "#FAF9F6",
     secondarybuttontextcolor: "#4E3C35",
+    placeholderTextColor: "#A9A9A9",
 
     error: "#E33131",
     success: "#43936c",
@@ -36,14 +37,17 @@ export const Colors = {
     border: "#484848",
     card: "#303030",
     notification: "#E57373",
+
     // React Native default colors override
     tint: "#3A241F",
     tabIconDefault: "#6C737A",
     tabIconSelected: "#8B6A5E",
+
     // Custom colors added here
     primarybuttoncolor: "#FAF9F6",
     primarybuttontextcolor: "#6D4C41",
     secondarybuttontextcolor: "#FFFFFF",
+    placeholderTextColor: "#696969",
 
     error: "#E33131",
     success: "#43936c",

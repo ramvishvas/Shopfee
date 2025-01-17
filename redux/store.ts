@@ -1,7 +1,7 @@
 import { configureStore, Middleware } from "@reduxjs/toolkit";
 import { useDispatch, useSelector, useStore } from "react-redux";
 
-import counterReducer from "./counterSlice";
+import sendOtpReducer from "./otpSlice";
 
 /**
  * A logger middleware for Redux Toolkit with TypeScript.
@@ -9,18 +9,15 @@ import counterReducer from "./counterSlice";
  */
 const logger: Middleware = (storeAPI) => (next) => (action) => {
   console.info("Dispatching action:", action);
-
   // Call the next middleware in the chain or the reducer if it's the last middleware.
   const result = next(action);
-
   console.info("Next state:", storeAPI.getState());
-
   return result;
 };
 
 export const store = configureStore({
   reducer: {
-    counter: counterReducer,
+    counter: sendOtpReducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
 });

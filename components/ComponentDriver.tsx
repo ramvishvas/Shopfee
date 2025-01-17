@@ -11,6 +11,8 @@ import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import ThemeChanger from "./ThemeChanger";
 import AppTabs from "./AppTabs";
 import SearchBar from "./SearchBar";
+import Dropdown from "./Dropdown";
+import TextArea from "./InputText";
 
 const ComponentDriver = () => {
   const [checked, setChecked] = React.useState(false);
@@ -182,6 +184,19 @@ const ComponentDriver = () => {
 
             {/* Search Bar */}
             <SearchBar />
+
+            {/* Dropdown */}
+            <Dropdown
+              options={[
+                "Option 1",
+                "Option 2",
+                "Option 3",
+                "Option 4",
+                "Option 5",
+              ]}
+            />
+
+            <TextArea label='Name' error='Please enter you name' />
           </View>
         </ScrollView>
       </SafeAreaView>

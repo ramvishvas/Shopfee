@@ -1,3 +1,4 @@
+import { useThemeColor } from "@/hooks/useThemeColor";
 import { Ionicons } from "@expo/vector-icons";
 import React, { useState, useEffect } from "react";
 import { View, TextInput } from "react-native";
@@ -13,6 +14,9 @@ const SearchBar: React.FC<SearchBarProps> = ({
   onSearch,
   debounceDelay = 300,
 }) => {
+  const placeholderTextColor = useThemeColor({}, "placeholderTextColor");
+  const textColor = useThemeColor({}, "text");
+
   const [searchText, setSearchText] = useState<string>(""); // Local state for input
   const [debouncedText, setDebouncedText] = useState<string>(""); // Debounced value
 
@@ -33,15 +37,19 @@ const SearchBar: React.FC<SearchBarProps> = ({
   }, [debouncedText, onSearch]);
 
   return (
-    <View className='flex-row items-center border rounded-3xl py-1 px-4'>
+    <View
+      className='flex-row items-center border rounded-3xl py-px px-4'
+      style={{ borderColor: textColor }}
+    >
       <TextInput
         className='flex-1 text-base'
         placeholder={placeholder}
-        placeholderTextColor='#A9A9A9'
+        placeholderTextColor={placeholderTextColor}
         value={searchText}
         onChangeText={setSearchText} // Update local state
+        style={{ color: textColor }}
       />
-      <Ionicons name='search' size={20} color='#A9A9A9' />
+      <Ionicons name='search' size={20} color={placeholderTextColor} />
     </View>
   );
 };

@@ -11,12 +11,14 @@ import { ThemedText } from "../themes/ThemedText";
 
 const { width } = Dimensions.get("window");
 
+export interface ICardData {
+  image: ImageSourcePropType;
+  title: string;
+  description: string;
+}
+
 interface CardProps {
-  data: {
-    image: ImageSourcePropType;
-    title: string;
-    description: string;
-  };
+  data: ICardData;
   index: number;
   scrollX: SharedValue<number>;
 }
@@ -57,7 +59,15 @@ const Card = ({ data, index, scrollX }: CardProps) => {
       style={[{ width: width }, rnAnimatedStyle]}
     >
       <View className='items-center justify-center'>
-        <Image source={data.image} resizeMode='contain' className='w-50 h-50' />
+        <Image
+          source={data.image}
+          resizeMode='contain'
+          className='w-50 h-50'
+          style={{
+            width: 200,
+            height: 200,
+          }}
+        />
       </View>
 
       <View className='mt-20'>
